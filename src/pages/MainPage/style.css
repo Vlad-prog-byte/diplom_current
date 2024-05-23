@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid {
+    display: grid;
+    grid-column-gap: 160px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.block__title {
+    font-family: "Brygada 1918";
+    font-weight: 600;
+    font-size: 44px;
+    line-height: 52px;
+}
+
+.block__description {
+    padding-left: 58px;
+    width: 468px;
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+}

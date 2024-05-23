@@ -2,7 +2,7 @@ import React from "react";
 
 const ProgramPage = () => {
     return (
-        <div></div>
+        <div>Программа</div>
     );
 }
 

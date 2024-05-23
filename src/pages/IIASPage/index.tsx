@@ -2,7 +2,7 @@ import React from "react";
 
 const IIASPage = () => {
     return(
-        <div></div>
+        <div>ИИАСУ’22</div>
     );
 }
 

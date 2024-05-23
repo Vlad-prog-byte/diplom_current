@@ -2,7 +2,7 @@ import React from "react";
 
 const OrganizersPage = () => {
     return (
-        <div></div>
+        <div>Организаторы</div>
     );
 }
 

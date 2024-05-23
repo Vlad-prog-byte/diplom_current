@@ -2,7 +2,7 @@ import React from "react";
 
 const ThematicsPage = () => {
     return(
-        <div></div>
+        <div>Тематика</div>
     );
 }
 
