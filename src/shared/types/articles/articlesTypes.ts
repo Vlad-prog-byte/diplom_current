@@ -1,7 +1,7 @@
 export interface IArticle {
     id: number
     subject: string
-    description?: string
+    description: string
     createdOn?: Date
     closedOn?: Date
     doneRatio: number
@@ -39,5 +39,6 @@ export interface IPaper {
     id: number,
     subject: string,
     createdOn?: Date,
-    updatedOn: Date
+    updatedOn: Date,
+    description: string
 }

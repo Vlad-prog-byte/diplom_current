@@ -5,11 +5,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from "@app/store";
 import { worker } from './mock/browser';
+import { ThemeProvider } from '@bauman-conference-library/mui-lib';
+import { CookiesProvider } from "react-cookie";
 
-
-async function enableMocking() {
-  return worker.start()
-}
+// async function enableMocking() {
+//   return worker.start()
+// }
 
 
 
@@ -17,14 +18,18 @@ async function enableMocking() {
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-enableMocking().then(() => {
+// enableMocking().then(() => {
   root.render(
     <React.StrictMode>
-      <BrowserRouter>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </BrowserRouter>
+      <ThemeProvider>
+        <CookiesProvider>
+          <BrowserRouter>
+            <Provider store={store}>
+              <App />
+            </Provider>
+          </BrowserRouter>
+        </CookiesProvider>
+      </ThemeProvider>
     </React.StrictMode>
   );
-})
+// })

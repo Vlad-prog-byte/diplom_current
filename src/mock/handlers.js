@@ -1,3 +1,3 @@
-import { getMain } from "@mock/snippets"
+import { getMain, getOrganizers, getTthematics} from "@mock/snippets"
 
-export const handlers = [getMain]
+export const handlers = [getMain, getOrganizers, getTthematics]

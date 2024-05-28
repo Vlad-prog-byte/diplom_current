@@ -4,33 +4,41 @@ import { fetchArticles } from "@shared/services/articles/articlesApi";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import {  ArticleCard } from "@bauman-conference-library/mui-lib";
-import { title } from "process";
-import { Widget} from "@bauman-conference-library/interface";
-import { props } from "@bauman-conference-library/interface"
+import { Button, Typography } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+import { useNavigate } from "react-router-dom";
 
 const ArticlesPage = () => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const articles = useSelector( getArticles );
     useEffect(() => {
-        console.log("app console", articles);
         dispatch(fetchArticles());
     }, [dispatch])
-
-    console.log("ArticlesPage", "arcticles=", articles)
+    console.log(articles)
     return (
-        <div>
-                {articles.map(article => {
-                    return <div><p>{article.subject}</p></div>
-                })}
-            {/* {articles.map(article => {
-                const preArticle = {
-                    title: article.subject,
-                    creation_date: article.createdOn || article.updatedOn,
-                    last_update_date: article.updatedOn,
-                    review_state: "reviewed"
-                }
-                return (<ArticleCard {...preArticle}/>)
-            })} */}
+        <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+            {
+                articles.map(article => {
+                    const preArticle = {
+                        title: article.subject,
+                        creation_date: new Date(article.createdOn || article.updatedOn),
+                        last_update_date: new Date(article.updatedOn),
+                        description: article.description,
+                        topic: "Искусственный интеллект в автоматизированных системах управления и обработки данных",
+                        update_href: `/articles/put/${article.id}`
+                    }
+                    return (<div style={{marginBottom: "40px"}}><ArticleCard {...preArticle}   review_state={"not reviewed"}/></div>)
+                })
+            }
+                <Button
+                    startIcon={<AddIcon/>} 
+                    variant="contained"
+                    size="large"
+                    onClick={() => navigate('/articles/add')}
+                > 
+                    <Typography variant="h2" color="white"> Добавить статью </Typography>
+                </Button>
         </div>
     );
 }

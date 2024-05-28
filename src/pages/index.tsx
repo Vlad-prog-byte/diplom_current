@@ -7,13 +7,15 @@ import ThematicsPage from "@pages/ThematicsPage";
 import RequirementsPage from "@pages/RequirementsPage";
 import IIASPage from "@pages/IIASPage";
 import ArticlesPage from "./ArticlesPage";
+import AddArticlePage from "./AddArticlePage";
+import PutArticlePage from "./PutArticlePage";
+
 
 interface RoutingProps {
     isInit: boolean
 }
 
 const Routing = ({ isInit }: RoutingProps) => {
-    console.log("IsInit=", isInit)
     return (
             <Routes>
                 <Route path="/" element={ <MainPage/> }/>
@@ -23,6 +25,8 @@ const Routing = ({ isInit }: RoutingProps) => {
                 <Route path="/requirements" element={ <RequirementsPage/> }/>
                 <Route path="/IIAS" element={ <IIASPage/> }/>
                 { isInit ? <Route path="/arcticles" element= { <ArticlesPage/>}/> : null }
+                { isInit ? <Route path="/articles/add" element={ <AddArticlePage/>}/> : null}
+                { isInit ? <Route path="/articles/put/:id" element={ <PutArticlePage/>}/> : null}
             </Routes>
     );
 }

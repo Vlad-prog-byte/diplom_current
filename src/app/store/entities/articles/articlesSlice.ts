@@ -11,15 +11,6 @@ const initialState: IPapersState =  {
     papers: []
 }
 
-
-
-// export interface IPaper {
-//     id: number,
-//     subject: string,
-//     createdOn?: Date,
-//     updatedOn: Date
-// }
-
 export  const articlesSlice = createSlice({
     name: "articles",
     initialState: initialState,
@@ -33,10 +24,10 @@ export  const articlesSlice = createSlice({
                 id: article.id, 
                 subject: article.subject, 
                 createdOn: article.createdOn, 
-                updatedOn: article.updatedOn
+                updatedOn: article.updatedOn,
+                description: article.description
                 }
             });
-            console.log("add case state.papers=", state.papers);
         });
         builder.addCase(fetchArticles.rejected, (state) => {
             state.papers = [];

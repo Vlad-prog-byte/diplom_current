@@ -9,6 +9,8 @@ import { getUserIsInit } from '@shared/selectors/auth/authSelectors';
 import { fetchAuth, fetchLogout } from '@shared/services/auth/authApi';
 import { useAppDispatch } from '@shared/hooks/hooks';
 import { AppDispatch } from './store';
+import { useTheme } from '@bauman-conference-library/mui-lib';
+import { ThemeProvider } from '@mui/material';
 
 const App = () => {
     const navbar = {
@@ -18,36 +20,59 @@ const App = () => {
         logo_img: "eferegew",
     }
 
+    const theme = useTheme({})
+    const navigate = useNavigate();
     const footer = {
-        email: "vlad2mickevich@gmail.com",
+        email: "bmstuaiconf@yandex.ru",
         start_date: new Date('2024-04-27'),
-        end_date: new Date('2024-04-27'),
+        end_date: new Date('2025-04-27'),
     }
 
     const dispatch = useAppDispatch();
     const isInit = useSelector( getUserIsInit );
-    console.log("App isInit=", isInit)
     useEffect(() => {
         dispatch(fetchAuth());
     }, [dispatch])
+
+
+    const signin_callback = () => {
+        const url = "http://science.iu5.bmstu.ru/sso/authorize?redirect_uri=http://127.0.0.1:8000/api/oauth/callback";
+        window.location = url as unknown as Location;
+    }
+
+    const logout_callback = () => {
+        navigate("/")
+        dispatch(fetchLogout());
+    }
     return (
-        <div className='container'>
-            <Navbar {...navbar} signin_callback={() => {}} is_authenticated={true}>
-                <mui.Link to="/organizers" component={ Link }> Организаторы </mui.Link>
-                <mui.Link to="/program" component={ Link }> Программа </mui.Link> 
-                <mui.Link to="/thematics" component={ Link }> Тематика </mui.Link> 
-                <mui.Link to="/requirements" component={ Link }> Требования </mui.Link> 
-                <mui.Link to="/IIAS" component={ Link }> ИИАСУ’22 </mui.Link>
-                { isInit ? <mui.Link to="/arcticles" component={ Link }> Статьи </mui.Link> : null }
-            </Navbar>
-            <Login isInit={isInit} dispatch={dispatch}/>
-            <div className="pages">
-                <Routing isInit={ isInit }/>
+        <ThemeProvider theme={theme}>
+            <div className='container'>
+                <Navbar 
+                    is_authenticated={isInit}
+                    logout_callback={logout_callback}
+                    signin_callback={signin_callback}
+                    home_href='#'
+                    auth_href='#'
+                    logo_name='#'
+                    logo_img='#'
+                >
+                    <mui.Link underline='none' to="/organizers" component={ Link }> Организаторы </mui.Link>
+                    {/* <mui.Link underline='none' to="/program" component={ Link }> Программа </mui.Link>  */}
+                    <mui.Link underline='none' to="/thematics" component={ Link }> Тематика </mui.Link> 
+                    {/* <mui.Link underline='none' to="/requirements" component={ Link }> Требования </mui.Link>  */}
+                    {/* <mui.Link underline='none' to="/IIAS" component={ Link }> ИИАСУ’22 </mui.Link> */}
+                    { isInit ? <mui.Link to="/arcticles" component={ Link }> Статьи </mui.Link> : null }
+                </Navbar>
+                <div className="pages">
+                    <Routing isInit={ isInit }/>
+                </div>
+                <Footer {...footer}>
+                    <Logo img={<img src='images/bmstu.png'/>} variant="h4" width='350px' children="Искусственный интеллект в автоматизированных системах управления и обработки данных"/>
+                    <Logo img={<img src='images/brain.png'/>} variant='h4' width='350px' children='Искусственный интеллект в автоматизированных системах управления и обработки данных'/>
+                    <Logo img={<img src='images/iu5.png'/>} variant='h4' width='350px' children='Кафедра ИУ5 Системы обработки информации и управления'/>
+                </Footer>
             </div>
-            <Footer {...footer}>
-                {}
-            </Footer>
-        </div>
+        </ThemeProvider>
     );
 };
 
@@ -55,28 +80,6 @@ const App = () => {
 interface ILogin {
     isInit: boolean,
     dispatch: AppDispatch
-}
-
-
-
-const Login: FC<ILogin> = (props) => {
-    const navigate = useNavigate();
-    const onOauth = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        if (!props.isInit) {
-            const url = "http://science.iu5.bmstu.ru/sso/authorize?redirect_uri=http://127.0.0.1:8000/api/oauth/callback";
-            window.location = url as unknown as Location;
-        } else {
-            navigate("/")
-            props.dispatch(fetchLogout());
-        }
-
-    }
-    return (
-        <div>
-            <Button onClick={ onOauth }>{props.isInit ? "Выйти" : "Войти" }</Button>
-        </div>
-    );
 }
 
 export default App;

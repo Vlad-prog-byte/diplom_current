@@ -5,7 +5,8 @@
         "@pages/*": ["pages/*"],
         "@app/*": ["app/*"],
         "@shared/*": ["shared/*"],
-        "@mock/*": ["mock/*"]
+        "@mock/*": ["mock/*"],
+        "@public/images/*": ["../public/images"]
       }
     }
 }
